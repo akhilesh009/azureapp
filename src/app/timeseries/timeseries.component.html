@@ -1,11 +1,49 @@
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-  <h1 class="h3 mb-0 text-gray-800">Time Series Chart</h1>
-  <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+  <h5 class="h5 mb-0 text-black-800 text-dark font-weight-bold">Time Series Chart</h5>
 </div>
+<div class="row">
+    <div class='col-sm-1 text-dark'>From&nbsp;date:</div>
+    <div class='col-sm-2'>
+        <div class="form-group">
+            <div class='input-group date' >
+                <input placeholder="from date" type='date' class="form-control" id='datetimepicker1' name="fromdate"  #fromdate  />
+            </div>
+        </div>
+    </div>
+    <div class="cols-sm-2">
+        <select class="form-control select" name="fromtime" #fromtime>
+            <option [value]="datatime" *ngFor="let datatime of datatimes">
+                {{datatime}}
+            </option>       
+        </select>
+    </div>
+    <div class='col-sm-1 text-dark' style="text-align:right;" >To date:</div>
+    <div class='col-sm-2'>
+        <div class="form-group">
+            <div class='input-group date' >
+                <input placeholder="to date" type='date' class="form-control" id='datetimepicker2' name="todate" #todate  />
+            </div>
+        </div>
+    </div>
+    <div class="cols-sm-2">
+            <select class="form-control select" name="totime" #totime>
+                <option [value]="datatime" *ngFor="let datatime of datatimes">
+                    {{datatime}}
+                </option>       
+            </select>
+        </div>
+    <div class="col-sm-2">
+        <a (click) = "getgraph(fromdate.value,fromtime.value,todate.value,totime.value);" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm text-white cursor-pointer" role="button">
+            <i class="fas fa-download fa-sm text-white-50"></i>
+                Generate Graph
+        </a>
+    </div>
+</div>
+
 <div class="card-body">
   <div class="chart-pie pt-4 pb-2">
-    <!-- <google-chart #chart
+    <google-chart #chart
         [title]="title"
         [type]="type"
         [data]="data"
@@ -13,6 +51,7 @@
         [options]="options"
         [width]="width"
         [height]="height">
-    </google-chart> -->
+    </google-chart>
   </div>
 </div>
+

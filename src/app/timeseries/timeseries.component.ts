@@ -1,4 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
+import { GetTimeseriesDataService } from '../timeseries/get-timeseries-data.service';
+
+
+
+
+import {Observable} from 'rxjs';
+
 
 @Component({
   selector: 'app-timeseries',
@@ -7,38 +16,50 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TimeseriesComponent implements OnInit {
 
-  constructor() { }
+   datatimes = ['01:00','02:00','03:00','04:00','05:00','06:00','07:00','08:00','09:00','10:00','11:00','12:00',
+   '13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','23:00','24:00'];
 
-  ngOnInit() {
-  }
+   fromDt:Date;
+   toDt:Date;
+   type:string;
+   title:string;
+   data:any;
+   constructor(private http:HttpClient , private timeseriesService: GetTimeseriesDataService) { 
+      this.type = 'LineChart';
+      this.title = 'Time series of  Speed';
+      this.data = [];
+   }
 
-     title = 'Average Temperatures of Cities';
-   type = 'LineChart';
-   data = [
-      ["Jan",  7.0],
-      ["Feb",  6.9],
-      ["Mar",  9.5],
-      ["Apr",  14.5],
-      ["May",  18.2],
-      ["Jun",  21.5],
-      ["Jul",  25.2],
-      ["Aug",  26.5],
-      ["Sep",  23.3],
-      ["Oct",  18.3],
-      ["Nov",  13.9],
-      ["Dec",  9.6]
-   ];
-   columnNames = ["Month", "Humidity"];
+   
+
+   ngOnInit() 
+   {
+   }
+
+   getgraph(fromdate, fromtime, todate, totime){
+      
+      this.fromDt = new Date(fromdate+' '+fromtime);
+      this.toDt   = new Date(todate+' '+totime);
+      this.timeseriesService.getTimeseries(this.fromDt,this.toDt).then(
+         res => { // Success
+            this.data = this.timeseriesService.graphData;
+         }
+       );     
+      
+   }   
+   
+   
+   columnNames = ["Timestamp", "Speed"];
    options = {   
       hAxis: {
-         title: 'Month'
+         title: 'Timestamp'
       },
       vAxis:{
-         title: 'Temperature'
+         title: 'Speed'
       },
       pointSize:5
    };
-   width = 550;
+   width = 1100;
    height = 400;
 
 }

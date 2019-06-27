@@ -1,0 +1,8 @@
+.input-group>.custom-file, .input-group>.custom-select, .input-group>.form-control, .input-group>.form-control-plaintext,
+.select {
+    height: 33px !important;
+}
+
+.cursor-pointer{
+    cursor: pointer;
+}
