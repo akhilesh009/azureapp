@@ -14,12 +14,14 @@ export class GetTimeseriesDataService {
 
   graphData = [];
 
+  token:string = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IkN0ZlFDOExlLThOc0M3b0MyelFrWnBjcmZPYyIsImtpZCI6IkN0ZlFDOExlLThOc0M3b0MyelFrWnBjcmZPYyJ9.eyJhdWQiOiIxMjBkNjg4ZC0xNTE4LTRjZjctYmQzOC0xODJmMTU4ODUwYjYiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC83NmEyYWU1YS05ZjAwLTRmNmItOTVlZC01ZDMzZDc3YzRkNjEvIiwiaWF0IjoxNTYxNzAwMzIyLCJuYmYiOjE1NjE3MDAzMjIsImV4cCI6MTU2MTcwNDIyMiwiYWlvIjoiQVNRQTIvOExBQUFBY09GdzVLQTU2dGRCaVM4ajVDWmh6ZE1Db05aZmg4ZmY5WVQ0ck9iREdYTT0iLCJhbXIiOlsid2lhIl0sImZhbWlseV9uYW1lIjoiU2hldGUiLCJnaXZlbl9uYW1lIjoiQWtoaWxlc2giLCJpbl9jb3JwIjoidHJ1ZSIsImlwYWRkciI6IjIwMy4xODkuMTgxLjEzNSIsIm5hbWUiOiJTaGV0ZSwgQWtoaWxlc2giLCJub25jZSI6ImZjM2M0NmM0LTExMTYtNGZmMC1iNmJhLWUyZmU2ZTliZWExZiIsIm9pZCI6IjViZTlhMDMzLTZlNzQtNDEyMC04NDM5LTE1MzFiYzhhMDk1OSIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0xNTMxMDgyMzU1LTczNDY0OTYyMS0zNzgyNTc0ODk4LTM0NDU5MDUiLCJwdWlkIjoiMTAwMzIwMDAzODRCQjQwQyIsInN1YiI6ImpYYVFaRUo4dWNrSjRnZ3ZNSnJtUGR4X015RFpHR0xYeGo1NmN0VFY5blEiLCJ0aWQiOiI3NmEyYWU1YS05ZjAwLTRmNmItOTVlZC01ZDMzZDc3YzRkNjEiLCJ1bmlxdWVfbmFtZSI6ImFraGlsZXNoLnNoZXRlQGNhcGdlbWluaS5jb20iLCJ1cG4iOiJha2hpbGVzaC5zaGV0ZUBjYXBnZW1pbmkuY29tIiwidXRpIjoiQUFOd3Q5TThra21UaDhtWEI1bGtBQSIsInZlciI6IjEuMCJ9.bwjUKfSr0ZywkPwTOIx2NdCpyGLe1Q7aQGWyqsLYdsrsqVsWoGpuiaRo6bRzv8VzX9hKRYoHyDfUsLVw6TKzjCSdEcNWyyTBMS9VPHtfDxFBO9DQAcEUcqThqkDm7WAEr8VWBz4CDuwvHpMwvFA4lHtMtMFcjvh0l9g8_8BZTw9ADlcp1EMWJgCuagsnWmkHeraACEFfp7_FrIg4bMwl8RqBJpR74MNMaMkNIiwZKGVRDanRMz_blr155djQSstw82Xgx5MHTBeDw4fEKq7VXRnWjcZXDpX_zzL6UPpEshw1Czmb6uxazb9ShG2Kp9cm2nUb_He99ncHQB_BVN7F6w';
+
   getTimeseries(fromDt:Date,toDt:Date) { //
 
    let promise = new Promise((resolve, reject) => {
          let headers = new HttpHeaders(); 
          headers = headers.set('Content-Type', 'application/json; charset=utf-8');
-         headers = headers.set('Authorization','Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IkN0ZlFDOExlLThOc0M3b0MyelFrWnBjcmZPYyIsImtpZCI6IkN0ZlFDOExlLThOc0M3b0MyelFrWnBjcmZPYyJ9.eyJhdWQiOiIxMjBkNjg4ZC0xNTE4LTRjZjctYmQzOC0xODJmMTU4ODUwYjYiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC83NmEyYWU1YS05ZjAwLTRmNmItOTVlZC01ZDMzZDc3YzRkNjEvIiwiaWF0IjoxNTYxNjEyNTYzLCJuYmYiOjE1NjE2MTI1NjMsImV4cCI6MTU2MTYxNjQ2MywiYWlvIjoiQVNRQTIvOExBQUFBd1ZCdjB6VXI0azhKQ0Q3bWxNSHpEYzlNdDVwejBaaUwzZVZaWGtsYnFCMD0iLCJhbXIiOlsid2lhIl0sImNfaGFzaCI6ImJRM2pTMWFFV3ZTa1pMUzl3TXhqTnciLCJmYW1pbHlfbmFtZSI6IlNoZXRlIiwiZ2l2ZW5fbmFtZSI6IkFraGlsZXNoIiwiaW5fY29ycCI6InRydWUiLCJpcGFkZHIiOiIyMDMuMTkxLjM0LjE4MSIsIm5hbWUiOiJTaGV0ZSwgQWtoaWxlc2giLCJub25jZSI6IjUxM2U4Yzg4LWVhZWEtNGU2NC04NWM0LTdlN2VjMTM1ZjI2NSIsIm9pZCI6IjViZTlhMDMzLTZlNzQtNDEyMC04NDM5LTE1MzFiYzhhMDk1OSIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS0xNTMxMDgyMzU1LTczNDY0OTYyMS0zNzgyNTc0ODk4LTM0NDU5MDUiLCJwdWlkIjoiMTAwMzIwMDAzODRCQjQwQyIsInN1YiI6ImpYYVFaRUo4dWNrSjRnZ3ZNSnJtUGR4X015RFpHR0xYeGo1NmN0VFY5blEiLCJ0aWQiOiI3NmEyYWU1YS05ZjAwLTRmNmItOTVlZC01ZDMzZDc3YzRkNjEiLCJ1bmlxdWVfbmFtZSI6ImFraGlsZXNoLnNoZXRlQGNhcGdlbWluaS5jb20iLCJ1cG4iOiJha2hpbGVzaC5zaGV0ZUBjYXBnZW1pbmkuY29tIiwidXRpIjoieUlQc0J4NG9EMDY4SlVUa2Q0OHVBQSIsInZlciI6IjEuMCJ9.RmcY23Ny7-uG4H8vV6FURM21TYqnGRn4q-PF023812tuIriy7aHzCZqCOTnC-cr-TVvP55_PI8yKNrhOG-lf2kJEzulaqi7s2gqcjqIUbix4o6cVbVyLQGq0HiT4Q44d0VzJIaglVHUSDfiyWZHT5ozsMvReLY71ZiZtUyEvVfRZxguzigDEd_1ZJLqzlWPlovW3qa2xrAN5OY4lRftJ16TquGIba-ZsyXhD-H9f6XcjOdXYCVem4jvFU1h9nNdOYZqIvq2ao9ma0mpv1wd57IRp826Z0_Q9qJHY0lfluO7Ozd5d0Gdjnymb6ks1sMBlaxbBXqMei1PqsBKix4FXMA');
+         headers = headers.set('Authorization','Bearer '+this.token);
 
          var data=   {
                         "searchSpan": {
@@ -41,6 +43,7 @@ export class GetTimeseriesDataService {
          .toPromise()
          .then(
                res =>{
+                  this.graphData = [];
                   var response = res['events'];
                   for(var i=0; i< response.length; i++){
                      var temp = [];
@@ -49,11 +52,11 @@ export class GetTimeseriesDataService {
                      temp.push(value);
                      temp.push(parseInt(response[i].values[3]));
                      this.graphData.push(temp);
-                     resolve();
                   }
+                  resolve();
                },
                err => {
-                  console.log("innn")
+                  
                   console.log(err);
                   reject();
                }

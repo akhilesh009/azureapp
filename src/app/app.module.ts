@@ -7,10 +7,12 @@ import {RouterModule, Routes} from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { TimeseriesComponent } from './timeseries/timeseries.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import {MatTreeModule, MatIconModule, MatButtonModule} from '@angular/material';
+import {MatTreeModule, MatIconModule, MatButtonModule , MatSnackBarModule} from '@angular/material';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatDatepickerModule, MatInputModule,MatNativeDateModule} from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { TreeviewModule } from 'ngx-treeview';
 
 
 
@@ -43,8 +45,9 @@ const routes: Routes = [
     BrowserModule,
     BrowserAnimationsModule,
     GoogleChartsModule,
-    MatTreeModule, MatIconModule, MatButtonModule,MatProgressBarModule,
-    MatDatepickerModule, MatInputModule,MatNativeDateModule,HttpClientModule,
+    MatTreeModule, MatIconModule, MatButtonModule,MatProgressBarModule,MatSnackBarModule,
+    MatDatepickerModule, MatInputModule,MatNativeDateModule,HttpClientModule,FormsModule,
+    TreeviewModule.forRoot(),
     RouterModule.forRoot(
       routes
       //{ enableTracing: true } // <-- debugging purposes only

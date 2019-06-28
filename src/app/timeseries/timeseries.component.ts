@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import { GetTimeseriesDataService } from '../timeseries/get-timeseries-data.service';
+import { MatSnackBar } from "@angular/material";
 
 
 
@@ -24,7 +25,10 @@ export class TimeseriesComponent implements OnInit {
    type:string;
    title:string;
    data:any;
-   constructor(private http:HttpClient , private timeseriesService: GetTimeseriesDataService) { 
+   showGrpah:boolean = false;
+   showSpinner:boolean = false;   
+
+   constructor(private http:HttpClient , private timeseriesService: GetTimeseriesDataService, public snackBar: MatSnackBar) { 
       this.type = 'LineChart';
       this.title = 'Time series of  Speed';
       this.data = [];
@@ -37,14 +41,42 @@ export class TimeseriesComponent implements OnInit {
    }
 
    getgraph(fromdate, fromtime, todate, totime){
-      
-      this.fromDt = new Date(fromdate+' '+fromtime);
-      this.toDt   = new Date(todate+' '+totime);
-      this.timeseriesService.getTimeseries(this.fromDt,this.toDt).then(
-         res => { // Success
-            this.data = this.timeseriesService.graphData;
-         }
-       );     
+      if(fromdate ==='' || todate === ''){
+         this.snackBar.open("Please select From and To dates.", "", {
+            duration: 3000,
+         });
+         return false;
+      }
+      else{
+         this.showGrpah = false;
+         this.fromDt = new Date(fromdate+' '+fromtime);
+         this.toDt   = new Date(todate+' '+totime);
+         this.showSpinner = true;
+         this.timeseriesService.getTimeseries(this.fromDt,this.toDt).then(
+            res => { // Success
+               this.showSpinner = true;
+               if(this.timeseriesService.graphData.length == 0){
+                  this.showSpinner = false;
+                  this.snackBar.open("No data found for selected dates.", "", {
+                     duration: 3000,
+                  });   
+               }else{
+                  this.data = this.timeseriesService.graphData;
+                  this.showGrpah = true;
+                  this.showSpinner = false;
+               }
+               
+            },
+            err =>{ //error
+               this.showGrpah = false;
+               this.showSpinner = false;
+               this.snackBar.open("Server is down . Please try after sometime.", "", {
+                  duration: 3000,
+               });
+            }
+          );   
+      }
+    
       
    }   
    
