@@ -1,13 +1,14 @@
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-  <h5 class="h5 mb-0 text-black-800 text-dark font-weight-bold">Time Series Chart</h5>
+  <h5 class="h5 mb-0 text-black-800 text-dark font-weight-bold">Time Series Insight</h5>
 </div>
 <div class="row">
     <div class='col-sm-1 text-dark'>From&nbsp;date:</div>
     <div class='col-sm-2'>
         <div class="form-group">
             <div class='input-group date' >
-                <input  placeholder="from date" type='date' class="form-control" id='datetimepicker1' name="fromdate"  #fromdate  />
+                <input  placeholder="from date" type='date' data-date-format="DD MMMM YYYY" class="form-control" id='datetimepicker1' name="fromdate"  #fromdate  />
+
             </div>
         </div>
     </div>
@@ -22,7 +23,7 @@
     <div class='col-sm-2'>
         <div class="form-group">
             <div class='input-group date' >
-                <input placeholder="to date" type='date' class="form-control" id='datetimepicker2' name="todate" #todate  />
+                <input placeholder="to date" type='date' data-date-format="DD MMMM YYYY" class="form-control" id='datetimepicker2' name="todate" #todate  />
             </div>
         </div>
     </div>
@@ -36,7 +37,7 @@
     <div class="col-sm-2">
         <a (click) = "getgraph(fromdate.value,fromtime.value,todate.value,totime.value);" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm text-white cursor-pointer" role="button">
             <i class="fas fa-download fa-sm text-white-50"></i>
-                Generate Graph
+                Show
         </a>
     </div>
 </div>

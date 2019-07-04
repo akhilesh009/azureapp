@@ -27,6 +27,7 @@ export class TimeseriesComponent implements OnInit {
    data:any;
    showGrpah:boolean = false;
    showSpinner:boolean = false;   
+   headerProperty:any;
 
    constructor(private http:HttpClient , private timeseriesService: GetTimeseriesDataService, public snackBar: MatSnackBar) { 
       this.type = 'LineChart';
@@ -48,6 +49,12 @@ export class TimeseriesComponent implements OnInit {
          return false;
       }
       else{
+         this.http.get("https://api.timeseries.azure.com/telemetry?api-version=2016-12-12", { observe: 'response' }).subscribe(res => {
+            this.headerProperty = res.headers.get('Authorization');
+            console.log(this.headerProperty);
+           
+         });
+
          this.showGrpah = false;
          this.fromDt = new Date(fromdate+' '+fromtime);
          this.toDt   = new Date(todate+' '+totime);
@@ -68,11 +75,21 @@ export class TimeseriesComponent implements OnInit {
                
             },
             err =>{ //error
-               this.showGrpah = false;
-               this.showSpinner = false;
-               this.snackBar.open("Server is down . Please try after sometime.", "", {
-                  duration: 3000,
-               });
+               console.log(err);
+               if(err==401){
+                  this.showGrpah = false;
+                  this.showSpinner = false;
+                  this.snackBar.open("Token has expired", "", {
+                     duration: 3000,
+                  });
+               }else{
+                  this.showGrpah = false;
+                  this.showSpinner = false;
+                  this.snackBar.open("Server is down . Please try after sometime.", "", {
+                     duration: 3000,
+                  });
+               }
+               
             }
           );   
       }
@@ -81,13 +98,13 @@ export class TimeseriesComponent implements OnInit {
    }   
    
    
-   columnNames = ["Timestamp", "Speed"];
+   columnNames = ["Timestamp", "Sum Pressure"];
    options = {   
       hAxis: {
          title: 'Timestamp'
       },
       vAxis:{
-         title: 'Speed'
+         title: 'Sum Pressure'
       },
       pointSize:5
    };

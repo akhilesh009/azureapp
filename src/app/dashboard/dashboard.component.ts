@@ -58,21 +58,37 @@ export class DashboardComponent implements OnInit {
    width1 = 650;
    height1 = 320;
 
-
-   title2 = 'Reciprocating Compressors';
+//Availability
+   title2 = 'Availability';
    type2 = 'PieChart';
    data2 = [
-      ['Discharge Pressure', 45.0],
-      ['Maximum Flow Rate', 15.0],
-      ['Horse Power', 22.8],
-      ['Compressor Brand', 12.2]
+      ['Discharge Pressure', 99.0],
+      ['Maximum Flow Rate', 1.0],
+
    ];
    columnNames2 = ['Browser', 'Percentage'];
    options2 = {    
       pieHole:0.4
    };
-   width2 = 650;
+   width2 = 500;
    height2 = 320;
+   
+
+//quality
+   title3 = 'Quality';
+   type3 = 'PieChart';
+   data3 = [
+      ['Discharge Pressure', 99.0],
+      ['Maximum Flow Rate', 1.0],
+
+   ];
+   columnNames3 = ['Browser', 'Percentage'];
+   options3 = {    
+      pieHole:0.4
+   };
+   width3 = 500;
+   height3 = 320;
+
 
   
 
